@@ -1,50 +1,50 @@
 class UsersController < ApplicationController
-  def index
-    render json: User.all
-end
-
-def show
-    user = User.find_by(id: session[:user_id])
-    if user
-        render json: user, status: :ok
-    else
-        render json: {error: 'user does not exist'}, status: :unprocessable_entity
+    def index
+        render json: User.all
     end
-end
 
-def update
-    user = User.find(params[:id])
-    if user
-        user.update(user_params)
-        render json: user
-    else
-        render json: {error: 'user does not exist'}
+    def show
+        user = User.find_by(id: session[:user_id])
+        if user
+            render json: user, status: :ok
+        else
+            render json: {error: 'user does not exist'}, status: :unprocessable_entity
+        end
     end
-end
 
-def destroy
-    user = User.find(params[:id])
-    if user
-        user.destroy
-        render json: { success: 'user deleted'}
-    else
-        render json: {error: 'user does not exist'}
+    def update
+        user = User.find(params[:id])
+        if user
+            user.update(user_params)
+            render json: user
+        else
+            render json: {error: 'user does not exist'}
+        end
     end
-end
 
-def create
-    user = User.create!(user_params)
-    if user.valid?
-        render json: user, status: :created
-    else
-        render json: {error: 'can not create user'}
+    def destroy
+        user = User.find(params[:id])
+        if user
+            user.destroy
+            render json: { success: 'user deleted'}
+        else
+            render json: {error: 'user does not exist'}
+        end
     end
-end
+
+    def create
+        user = User.create!(user_params)
+        if user.valid?
+            render json: user, status: :created
+        else
+            render json: {error: 'can not create user'}
+        end
+    end
 
 
-private
+    private
 
-def user_params
-    params.permit(:username, :password, :email, :avatar)
-end
+    def user_params
+        params.permit(:username, :password, :email, :avatar)
+    end
 end
