@@ -1,4 +1,4 @@
 class Feedback < ApplicationRecord
-  belongs_to :user_id
-  belongs_to :coffee
+  belongs_to :user, dependent: :delete
+  belongs_to :coffee, dependent: :delete
 end
